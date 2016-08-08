@@ -23,6 +23,7 @@ you need to have the below installed for this project.
 
 - Node https://nodejs.org/
 - Bower http://bower.io/
+- Direnv
 
 # Docs
 - Wiki https://github.com/maxmckenzie/FrontEndSeed/wiki
