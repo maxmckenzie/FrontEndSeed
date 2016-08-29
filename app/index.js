@@ -19,5 +19,5 @@ app.get('/', function(req, res){
 app.set('port', (process.env.PORT || 8080));
 
 app.listen(app.get('port'), function() {
-  console.log(`Node app is running on http://localhost:${app.get('port')}`);
+  logger.info(`Node app is running on http://localhost:${app.get('port')}`);
 });
