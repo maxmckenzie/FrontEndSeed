@@ -12,31 +12,32 @@ logger.fatal('test fatal');
 
 > This example uses global environment configurations
 */
+if (process.env.NODE_ENV === 'production') {
+  // set up raven client
+  const client = new raven.Client(process.env.DSM);
 
-// set up raven client
-const client = new raven.Client(process.env.DSM);
+  // patch global node errors
+  client.patchGlobal();
 
-// patch global node errors
-client.patchGlobal();
+  // fire an event when a call is successfully made
+  client.on('logged', () => {
+    console.log(`Successfully logged to: ${client.dsn.host}`);
+  });
 
-// fire an event when a call is successfully made
-client.on('logged', () => {
-  console.log(`Successfully logged to: ${client.dsn.host}`);
-});
+  // fire an event when a call fails to be made
+  client.on('error', (e) => {
+    console.log(`Failed to log to: ${client.dsn.host}
+      reason: ${e.reason} 
+      statusCode: ${e.statusCode}
+      responce: ${e.response}
+    `);
+  });
 
-// fire an event when a call fails to be made
-client.on('error', (e) => {
-  console.log(`Failed to log to: ${client.dsn.host}
-    reason: ${e.reason} 
-    statusCode: ${e.statusCode}
-    responce: ${e.response}
-  `);
-});
-
-// Set tags such as env (development/production)
-client.setTagsContext({
-  environment: process.env.NODE_ENV,
-});
+  // Set tags such as env (development/production)
+  client.setTagsContext({
+    environment: process.env.NODE_ENV,
+  });
+}
 
 // Hook all event level types and expose them as a node module export pattern
 exports.info = (data) => {
@@ -45,7 +46,7 @@ exports.info = (data) => {
       level: 'info',
     });
   }
-  console.log(data);
+  console.log(`Info: ${data}`);
 };
 
 exports.error = (data) => {
@@ -54,7 +55,7 @@ exports.error = (data) => {
       level: 'error',
     });
   }
-  console.log(data);
+  console.log(`Error: ${data}`);
 };
 
 exports.warning = (data) => {
@@ -63,7 +64,7 @@ exports.warning = (data) => {
       level: 'warning',
     });
   }
-  console.log(data);
+  console.log(`Warning: ${data}`);
 };
 
 exports.debug = (data) => {
@@ -72,7 +73,7 @@ exports.debug = (data) => {
       level: 'debug',
     });
   }
-  console.log(data);
+  console.log(`Debug: ${data}`);
 };
 
 exports.fatal = (data) => {
@@ -81,5 +82,5 @@ exports.fatal = (data) => {
       level: 'fatal',
     });
   }
-  console.log(data);
+  console.log(`Fatal: ${data}`);
 };

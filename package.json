@@ -37,6 +37,7 @@
     "twig": "^0.8.2"
   },
   "devDependencies": {
+    "concurrently": "^2.2.0",
     "eslint": "^3.2.2",
     "eslint-config-airbnb": "^10.0.0",
     "eslint-plugin-import": "^1.12.0",

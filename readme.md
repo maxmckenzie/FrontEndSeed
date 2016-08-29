@@ -43,6 +43,13 @@ Then run `git remote remove origin` this will remove the original URL form your 
 
 > If you are also using Github for your project then you can simply hit the fork button on this page https://github.com/maxmckenzie/FrontEndSeed
 
+# Set up
+install direnv via brew `brew install direnv` note that you will need to add it to your bash or zsh rc file
+
+in terminal create your envrc by typing the command `mv .envrc-example .envrc`
+
+Add a sentry DSM for error loggin via http://getsentry.com
+
 # Install and Start
 run the following commands.
 
